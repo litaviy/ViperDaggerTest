@@ -41,29 +41,6 @@ public class SignUpPresenter extends SuperPresenter<SignUpView, Router> {
             }
         }
     };
-    private ActionResultListener mSignUpListener = new ActionResultListener() {
-        @Override
-        public void onSuccessResult() {
-            if (getView() != null) {
-                getView().setSignUpEnabled(true);
-                getView().setProgressVisibility(false);
-                getView().showMessage("Registration Success!");
-
-                /**
-                 * Or where you need
-                 */
-                getRouter().goToSignIn();
-            }
-        }
-
-        @Override
-        public void onFailureResult(@NonNull String error) {
-            if (getView() != null) {
-                getView().setProgressVisibility(false);
-                getView().showMessage(error);
-            }
-        }
-    };
 
     @Inject
     public SignUpPresenter(SignUpView signUpView,

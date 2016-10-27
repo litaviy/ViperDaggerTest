@@ -46,6 +46,12 @@ public class SignInPresenter extends SuperPresenter<SignInView, Router> {
     }
 
     @Override
+    public void onDestroy() {
+        mInteractor = null;
+        super.onDestroy();
+    }
+
+    @Override
     public void onStart(@Nullable Bundle bundle) {
 
     }
