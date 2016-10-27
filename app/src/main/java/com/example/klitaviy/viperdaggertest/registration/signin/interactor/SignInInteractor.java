@@ -1,4 +1,4 @@
-package com.example.klitaviy.viperdaggertest.registration.signin;
+package com.example.klitaviy.viperdaggertest.registration.signin.interactor;
 
 import android.support.annotation.NonNull;
 

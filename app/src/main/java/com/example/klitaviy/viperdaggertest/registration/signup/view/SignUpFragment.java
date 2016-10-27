@@ -1,4 +1,4 @@
-package com.example.klitaviy.viperdaggertest.registration.signin;
+package com.example.klitaviy.viperdaggertest.registration.signup.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +16,9 @@ import com.example.klitaviy.viperdaggertest.common.SuperPresenter;
 import com.example.klitaviy.viperdaggertest.listeners.Layout;
 import com.example.klitaviy.viperdaggertest.registration.RegistrationModule;
 import com.example.klitaviy.viperdaggertest.registration.Router;
+import com.example.klitaviy.viperdaggertest.registration.signup.DaggerSignUpComponent;
+import com.example.klitaviy.viperdaggertest.registration.signup.SignUpModule;
+import com.example.klitaviy.viperdaggertest.registration.signup.presenter.SignUpPresenter;
 
 import javax.inject.Inject;
 
@@ -23,38 +26,34 @@ import javax.inject.Inject;
  * Created by klitaviy on 10/13/16.
  */
 
-@Layout(id = R.layout.fr_login)
-public class SignInFragment extends SuperFragment implements SignInView {
+@Layout(id = R.layout.fr_user)
+public class SignUpFragment extends SuperFragment implements SignUpView {
 
     @Inject
-    SignInPresenter mPresenter;
+    SignUpPresenter mPresenter;
 
-    private Button mLoginButton;
-    private EditText mUsername, mPassword;
+    private Button mAction;
+    private EditText mFName, mLName, mEmail;
     private ProgressBar mProgressBar;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mUsername = (EditText) view.findViewById(R.id.login_username);
-        mPassword = (EditText) view.findViewById(R.id.login_password);
-        mLoginButton = (Button) view.findViewById(R.id.login_action);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.login_progress);
+        mAction = (Button) view.findViewById(R.id.sign_up_action);
+        mFName = (EditText) view.findViewById(R.id.sign_up_f_name);
+        mLName = (EditText) view.findViewById(R.id.sign_up_l_name);
+        mEmail = (EditText) view.findViewById(R.id.sign_up_email);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.sign_up_progress);
 
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
+        mAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.onLoginClick(
-                        mUsername.getText().toString(),
-                        mPassword.getText().toString()
+                mPresenter.signUp(
+                        mFName.getText().toString(),
+                        mLName.getText().toString(),
+                        mEmail.getText().toString()
                 );
-            }
-        });
-        view.findViewById(R.id.login_sign_up).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.onSignUpClick();
             }
         });
     }
@@ -67,9 +66,9 @@ public class SignInFragment extends SuperFragment implements SignInView {
 
     @Override
     protected void setupComponent() {
-        DaggerSignInComponent.builder()
+        DaggerSignUpComponent.builder()
                 .appComponent(App.getAppComponent())
-                .signInModule(new SignInModule(this))
+                .signUpModule(new SignUpModule(this))
                 .registrationModule(new RegistrationModule((Router) getActivity()))
                 .build()
                 .inject(this);
@@ -78,13 +77,13 @@ public class SignInFragment extends SuperFragment implements SignInView {
     @Override
     public void setProgressVisibility(boolean visibility) {
         mProgressBar.setVisibility(
-                visibility ? View.VISIBLE : View.INVISIBLE
+                visibility ? View.VISIBLE : View.GONE
         );
     }
 
     @Override
-    public void setLoginEnabled(boolean enabled) {
-        mLoginButton.setEnabled(enabled);
+    public void setSignUpEnabled(boolean enabled) {
+        mAction.setEnabled(enabled);
     }
 
     @Override

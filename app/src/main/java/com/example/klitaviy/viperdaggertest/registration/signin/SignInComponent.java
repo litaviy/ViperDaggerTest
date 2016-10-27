@@ -3,6 +3,7 @@ package com.example.klitaviy.viperdaggertest.registration.signin;
 import com.example.klitaviy.viperdaggertest.data.AppComponent;
 import com.example.klitaviy.viperdaggertest.registration.RegistrationModule;
 import com.example.klitaviy.viperdaggertest.registration.RegistrationScope;
+import com.example.klitaviy.viperdaggertest.registration.signin.view.SignInFragment;
 
 import dagger.Component;
 

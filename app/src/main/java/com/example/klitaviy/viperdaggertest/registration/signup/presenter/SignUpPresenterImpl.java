@@ -1,20 +1,20 @@
-package com.example.klitaviy.viperdaggertest.registration.signup;
+package com.example.klitaviy.viperdaggertest.registration.signup.presenter;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.example.klitaviy.viperdaggertest.common.SuperPresenter;
+import com.example.klitaviy.viperdaggertest.common.SuperPresenterImpl;
 import com.example.klitaviy.viperdaggertest.listeners.ActionResultListener;
 import com.example.klitaviy.viperdaggertest.registration.Router;
-
-import javax.inject.Inject;
+import com.example.klitaviy.viperdaggertest.registration.signup.interactor.SignUpInteractor;
+import com.example.klitaviy.viperdaggertest.registration.signup.view.SignUpView;
 
 /**
  * Created by klitaviy on 10/13/16.
  */
 
-public class SignUpPresenter extends SuperPresenter<SignUpView, Router> {
+public class SignUpPresenterImpl extends SuperPresenterImpl<SignUpView, Router> implements SignUpPresenter {
 
     private SignUpInteractor mInteractor;
 
@@ -42,10 +42,9 @@ public class SignUpPresenter extends SuperPresenter<SignUpView, Router> {
         }
     };
 
-    @Inject
-    public SignUpPresenter(SignUpView signUpView,
-                           Router router,
-                           SignUpInteractorImpl interactor) {
+    public SignUpPresenterImpl(SignUpView signUpView,
+                               Router router,
+                               SignUpInteractor interactor) {
         super(signUpView, router);
         mInteractor = interactor;
     }
@@ -67,7 +66,8 @@ public class SignUpPresenter extends SuperPresenter<SignUpView, Router> {
         super.onDestroy();
     }
 
-    void signUp(String firstName, String lastName, String email) {
+    @Override
+    public void signUp(String firstName, String lastName, String email) {
         if (getView() != null) {
             getView().setProgressVisibility(true);
             mInteractor.signUp(mSignUpListener, firstName, lastName, email);

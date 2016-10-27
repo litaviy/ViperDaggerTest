@@ -1,4 +1,4 @@
-package com.example.klitaviy.viperdaggertest.registration.signin;
+package com.example.klitaviy.viperdaggertest.registration.signin.interactor;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -21,7 +21,8 @@ public class SignInInteractorImpl implements SignInInteractor {
     private RESTClient mRESTClient;
 
     @Inject
-    public SignInInteractorImpl(DataProvider dataProvider, RESTClient RESTClient) {
+    public SignInInteractorImpl(@NonNull DataProvider dataProvider,
+                                @NonNull RESTClient RESTClient) {
         mDataProvider = dataProvider;
         mRESTClient = RESTClient;
     }

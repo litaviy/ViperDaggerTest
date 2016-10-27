@@ -1,22 +1,22 @@
-package com.example.klitaviy.viperdaggertest.registration.signin;
+package com.example.klitaviy.viperdaggertest.registration.signin.presenter;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.example.klitaviy.viperdaggertest.common.SuperPresenter;
+import com.example.klitaviy.viperdaggertest.common.SuperPresenterImpl;
 import com.example.klitaviy.viperdaggertest.listeners.ActionResultListener;
 import com.example.klitaviy.viperdaggertest.registration.Router;
-
-import javax.inject.Inject;
+import com.example.klitaviy.viperdaggertest.registration.signin.interactor.SignInInteractor;
+import com.example.klitaviy.viperdaggertest.registration.signin.view.SignInView;
 
 /**
  * Created by klitaviy on 10/13/16.
  */
 
-public class SignInPresenter extends SuperPresenter<SignInView, Router> {
+public class SignInPresenterImpl extends SuperPresenterImpl<SignInView, Router> implements
+        SignInPresenter {
 
     SignInInteractor mInteractor;
+
     private ActionResultListener mResultListener = new ActionResultListener() {
         @Override
         public void onSuccessResult() {
@@ -37,10 +37,9 @@ public class SignInPresenter extends SuperPresenter<SignInView, Router> {
         }
     };
 
-    @Inject
-    public SignInPresenter(SignInView view,
-                           Router router,
-                           SignInInteractorImpl interactor) {
+    public SignInPresenterImpl(@NonNull SignInView view,
+                               @NonNull Router router,
+                               @NonNull SignInInteractor interactor) {
         super(view, router);
         mInteractor = interactor;
     }
@@ -52,16 +51,7 @@ public class SignInPresenter extends SuperPresenter<SignInView, Router> {
     }
 
     @Override
-    public void onStart(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onViewReady() {
-
-    }
-
-    public void onLoginClick(String userName, String password) {
+    public void onSignInClick(String userName, String password) {
         if (getView() != null) {
             getView().setProgressVisibility(true);
             getView().setLoginEnabled(false);
@@ -69,6 +59,7 @@ public class SignInPresenter extends SuperPresenter<SignInView, Router> {
         }
     }
 
+    @Override
     public void onSignUpClick() {
         if (getRouter() != null) {
             getRouter().goToSignUp();

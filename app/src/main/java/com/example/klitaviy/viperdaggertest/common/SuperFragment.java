@@ -62,7 +62,7 @@ public abstract class SuperFragment extends Fragment {
     /**
      * Called to setup Presenter in SuperFragment.
      *
-     * @return - SuperPresenter
+     * @return - SuperPresenterImpl
      */
     @NonNull
     protected abstract SuperPresenter getPresenter();

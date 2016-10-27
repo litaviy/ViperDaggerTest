@@ -1,4 +1,4 @@
-package com.example.klitaviy.viperdaggertest.registration.signup;
+package com.example.klitaviy.viperdaggertest.registration.signup.interactor;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -9,8 +9,6 @@ import com.example.klitaviy.viperdaggertest.listeners.ActionResultListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.inject.Inject;
 
 /**
  * Created by klitaviy on 10/13/16.
@@ -23,7 +21,6 @@ public class SignUpInteractorImpl implements SignUpInteractor {
     private DataProvider mDataProvider;
     private RESTClient mRESTClient;
 
-    @Inject
     public SignUpInteractorImpl(DataProvider dataProvider, RESTClient RESTClient) {
         mDataProvider = dataProvider;
         mRESTClient = RESTClient;
