@@ -3,6 +3,7 @@ package com.example.klitaviy.viperdaggertest.registration.signup.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +15,7 @@ import com.example.klitaviy.viperdaggertest.R;
 import com.example.klitaviy.viperdaggertest.common.SuperFragment;
 import com.example.klitaviy.viperdaggertest.common.SuperPresenter;
 import com.example.klitaviy.viperdaggertest.listeners.Layout;
-import com.example.klitaviy.viperdaggertest.registration.RegistrationModule;
-import com.example.klitaviy.viperdaggertest.registration.Router;
-import com.example.klitaviy.viperdaggertest.registration.signup.DaggerSignUpComponent;
-import com.example.klitaviy.viperdaggertest.registration.signup.SignUpModule;
+import com.example.klitaviy.viperdaggertest.registration.RegistrationActivity;
 import com.example.klitaviy.viperdaggertest.registration.signup.presenter.SignUpPresenter;
 
 import javax.inject.Inject;
@@ -65,12 +63,14 @@ public class SignUpFragment extends SuperFragment implements SignUpView {
     }
 
     @Override
+    protected void clearReferences() {
+        App.getComponentsProvider().clearSignUpComponent();
+    }
+
+    @Override
     protected void setupComponent() {
-        DaggerSignUpComponent.builder()
-                .appComponent(App.getAppComponent())
-                .signUpModule(new SignUpModule(this))
-                .registrationModule(new RegistrationModule((Router) getActivity()))
-                .build()
+        App.getComponentsProvider()
+                .plusSignUpComponent(this)
                 .inject(this);
     }
 
@@ -79,6 +79,12 @@ public class SignUpFragment extends SuperFragment implements SignUpView {
         mProgressBar.setVisibility(
                 visibility ? View.VISIBLE : View.GONE
         );
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(RegistrationActivity.TAG, SignUpFragment.class.getSimpleName() + " onDestroy() called");
+        super.onDestroy();
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.util.Log;
 import com.example.klitaviy.viperdaggertest.data.DataProvider;
 import com.example.klitaviy.viperdaggertest.data.RESTClient;
 import com.example.klitaviy.viperdaggertest.registration.RegistrationActivity;
-import com.example.klitaviy.viperdaggertest.registration.RegistrationScope;
 import com.example.klitaviy.viperdaggertest.registration.Router;
 import com.example.klitaviy.viperdaggertest.registration.signup.interactor.SignUpInteractor;
 import com.example.klitaviy.viperdaggertest.registration.signup.interactor.SignUpInteractorImpl;
@@ -32,7 +31,7 @@ public class SignUpModule {
 
     @Provides
     @NonNull
-    @RegistrationScope
+    @SignUpScope
     public SignUpPresenter provideSignUpPresenter(@NonNull SignUpView view,
                                                   @NonNull Router router,
                                                   @NonNull SignUpInteractor interactor) {
@@ -42,7 +41,7 @@ public class SignUpModule {
 
     @Provides
     @NonNull
-    @RegistrationScope
+    @SignUpScope
     public SignUpInteractor provideSignUpInteractor(@NonNull DataProvider dataProvider,
                                                     @NonNull RESTClient client) {
         Log.d(RegistrationActivity.TAG, "SignUpModule - Provided SignUpInteractor.");
@@ -51,7 +50,7 @@ public class SignUpModule {
 
     @Provides
     @NonNull
-    @RegistrationScope
+    @SignUpScope
     public SignUpView provideSignUpView() {
         Log.d(RegistrationActivity.TAG, "SignUpModule - Provided SignUpView.");
         return mSignUpView;

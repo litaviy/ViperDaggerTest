@@ -3,10 +3,10 @@ package com.example.klitaviy.viperdaggertest.registration.signin;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.klitaviy.viperdaggertest.common.ListenersFabric;
 import com.example.klitaviy.viperdaggertest.data.DataProvider;
 import com.example.klitaviy.viperdaggertest.data.RESTClient;
 import com.example.klitaviy.viperdaggertest.registration.RegistrationActivity;
-import com.example.klitaviy.viperdaggertest.registration.RegistrationScope;
 import com.example.klitaviy.viperdaggertest.registration.Router;
 import com.example.klitaviy.viperdaggertest.registration.signin.interactor.SignInInteractor;
 import com.example.klitaviy.viperdaggertest.registration.signin.interactor.SignInInteractorImpl;
@@ -32,17 +32,18 @@ public class SignInModule {
 
     @Provides
     @NonNull
-    @RegistrationScope
+    @SignInScope
     public SignInPresenter provideSignInPresenter(@NonNull SignInView view,
                                                   @NonNull Router router,
-                                                  @NonNull SignInInteractor interactor) {
+                                                  @NonNull SignInInteractor interactor,
+                                                  @NonNull ListenersFabric fabric) {
         Log.d(RegistrationActivity.TAG, "SignInModule - Provided SignInPresenter.");
-        return new SignInPresenterImpl(view, router, interactor);
+        return new SignInPresenterImpl(view, router, interactor, fabric);
     }
 
     @Provides
     @NonNull
-    @RegistrationScope
+    @SignInScope
     public SignInInteractor provideSignInInteractor(@NonNull DataProvider dataProvider,
                                                     @NonNull RESTClient RESTClient) {
         Log.d(RegistrationActivity.TAG, "SignInModule - Provided SignInInteractor.");
@@ -51,7 +52,7 @@ public class SignInModule {
 
     @Provides
     @NonNull
-    @RegistrationScope
+    @SignInScope
     public SignInView provideSignInView() {
         Log.d(RegistrationActivity.TAG, "SignInModule - Provided SignInView.");
         return mSignInView;

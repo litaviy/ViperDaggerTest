@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.klitaviy.viperdaggertest.App;
 import com.example.klitaviy.viperdaggertest.R;
 import com.example.klitaviy.viperdaggertest.registration.signin.view.SignInFragment;
 import com.example.klitaviy.viperdaggertest.registration.signup.view.SignUpFragment;
@@ -29,7 +30,13 @@ public class RegistrationActivity extends AppCompatActivity implements Router {
                     }
                 }
         );
+
+        setupComponent();
         goToSignIn();
+    }
+
+    public void setupComponent() {
+        App.getComponentsProvider().plusRegistrationComponent(this);
     }
 
     @Override

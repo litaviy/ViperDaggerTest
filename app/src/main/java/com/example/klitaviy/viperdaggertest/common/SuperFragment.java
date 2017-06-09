@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.klitaviy.viperdaggertest.listeners.Layout;
+import com.example.klitaviy.viperdaggertest.registration.RegistrationActivity;
 
 import java.util.UUID;
 
@@ -27,6 +29,7 @@ public abstract class SuperFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(RegistrationActivity.TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         setupComponent();
         getPresenter().onStart(getArguments());
     }
@@ -55,8 +58,15 @@ public abstract class SuperFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        getPresenter().onDestroy();
         super.onDestroyView();
+        getPresenter().onDestroy();
+        clearReferences();
+    }
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
     }
 
     /**
@@ -66,6 +76,8 @@ public abstract class SuperFragment extends Fragment {
      */
     @NonNull
     protected abstract SuperPresenter getPresenter();
+
+    protected abstract void clearReferences();
 
     /**
      * Called to setup DaggerComponent in subclass

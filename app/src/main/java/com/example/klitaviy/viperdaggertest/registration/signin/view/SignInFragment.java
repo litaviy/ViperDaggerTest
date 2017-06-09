@@ -3,6 +3,7 @@ package com.example.klitaviy.viperdaggertest.registration.signin.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +15,7 @@ import com.example.klitaviy.viperdaggertest.R;
 import com.example.klitaviy.viperdaggertest.common.SuperFragment;
 import com.example.klitaviy.viperdaggertest.common.SuperPresenter;
 import com.example.klitaviy.viperdaggertest.listeners.Layout;
-import com.example.klitaviy.viperdaggertest.registration.RegistrationModule;
-import com.example.klitaviy.viperdaggertest.registration.Router;
-import com.example.klitaviy.viperdaggertest.registration.signin.DaggerSignInComponent;
-import com.example.klitaviy.viperdaggertest.registration.signin.SignInModule;
+import com.example.klitaviy.viperdaggertest.registration.RegistrationActivity;
 import com.example.klitaviy.viperdaggertest.registration.signin.presenter.SignInPresenter;
 
 import javax.inject.Inject;
@@ -69,12 +67,14 @@ public class SignInFragment extends SuperFragment implements SignInView {
     }
 
     @Override
+    protected void clearReferences() {
+        App.getComponentsProvider().clearSignInComponent();
+    }
+
+    @Override
     protected void setupComponent() {
-        DaggerSignInComponent.builder()
-                .appComponent(App.getAppComponent())
-                .signInModule(new SignInModule(this))
-                .registrationModule(new RegistrationModule((Router) getActivity()))
-                .build()
+        App.getComponentsProvider()
+                .plusSignInComponent(this)
                 .inject(this);
     }
 
@@ -83,6 +83,12 @@ public class SignInFragment extends SuperFragment implements SignInView {
         mProgressBar.setVisibility(
                 visibility ? View.VISIBLE : View.INVISIBLE
         );
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(RegistrationActivity.TAG, SignInFragment.class.getSimpleName() + " onDestroy() called");
+        super.onDestroy();
     }
 
     @Override

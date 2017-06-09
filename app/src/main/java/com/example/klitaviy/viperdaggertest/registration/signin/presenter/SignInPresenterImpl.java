@@ -2,6 +2,7 @@ package com.example.klitaviy.viperdaggertest.registration.signin.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.example.klitaviy.viperdaggertest.common.ListenersFabric;
 import com.example.klitaviy.viperdaggertest.common.SuperPresenterImpl;
 import com.example.klitaviy.viperdaggertest.listeners.ActionResultListener;
 import com.example.klitaviy.viperdaggertest.registration.Router;
@@ -16,11 +17,12 @@ public class SignInPresenterImpl extends SuperPresenterImpl<SignInView, Router> 
         SignInPresenter {
 
     SignInInteractor mInteractor;
+    private ListenersFabric mListenersFabric;
 
     private ActionResultListener mResultListener = new ActionResultListener() {
         @Override
         public void onSuccessResult() {
-            if (getRouter() != null) {
+            if (getView() != null) {
                 getView().showMessage("Sign In Success!");
                 getView().setProgressVisibility(false);
             }
@@ -44,6 +46,16 @@ public class SignInPresenterImpl extends SuperPresenterImpl<SignInView, Router> 
         mInteractor = interactor;
     }
 
+
+    public SignInPresenterImpl(@NonNull SignInView view,
+                               @NonNull Router router,
+                               @NonNull SignInInteractor interactor,
+                               @NonNull ListenersFabric listenersFabric) {
+        super(view, router);
+        mInteractor = interactor;
+        mListenersFabric = listenersFabric;
+    }
+
     @Override
     public void onDestroy() {
         mInteractor = null;
@@ -55,7 +67,10 @@ public class SignInPresenterImpl extends SuperPresenterImpl<SignInView, Router> 
         if (getView() != null) {
             getView().setProgressVisibility(true);
             getView().setLoginEnabled(false);
-            mInteractor.login(mResultListener, userName, password);
+            mInteractor.login(
+                    mResultListener,
+                    userName,
+                    password);
         }
     }
 

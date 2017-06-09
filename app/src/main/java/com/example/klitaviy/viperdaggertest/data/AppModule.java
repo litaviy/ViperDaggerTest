@@ -3,6 +3,9 @@ package com.example.klitaviy.viperdaggertest.data;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.example.klitaviy.viperdaggertest.common.ListenersFabric;
+import com.example.klitaviy.viperdaggertest.common.ListenersFabricImpl;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -39,5 +42,12 @@ public class AppModule {
     @Singleton
     public DataProvider provideDataProvider() {
         return new DataProviderImpl();
+    }
+
+    @Provides
+    @NonNull
+    @Singleton
+    public ListenersFabric provideListenersFabric() {
+        return new ListenersFabricImpl();
     }
 }
